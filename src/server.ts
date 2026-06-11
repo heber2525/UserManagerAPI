@@ -13,13 +13,11 @@ app.get('/', (req, res) => {
     author: 'Heber Baraybar',
   });
 });
-
-app.get('/api/info', (req, res) => {
-  res.json({
-    project: 'UserManager API',
-    description: 'API REST para gestionar usuarios',
-    day: 2,
-    technologies: ['Node.js', 'Express', 'TypeScript'],
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'UserManager API funcionando',
+    timestamp: new Date().toString(),
   });
 });
 
