@@ -30,3 +30,11 @@ GET /api/health
 El endpoint `/api/health` sirve para comprobar que la API está funcionando
 correctamente. Cuando recibe una petición `GET`, devuelve un JSON con el estado
 de la aplicación.
+
+## Pruebas realizadas
+
+| Método | Ruta        | Código |
+| ------ | ----------- | ------ |
+| GET    | /           | 200    |
+| GET    | /api/health | 200    |
+| GET    | /api/ping   | 200    |
