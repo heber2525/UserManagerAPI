@@ -34,3 +34,10 @@ DELETE sirve para eliminar o desactivar un recurso.
 | /api/users   | POST   | 201             |                    |
 | /api/users/1 | PATCH  | 200             |                    |
 | /api/users/1 | DELETE | 200             |                    |
+
+| Método | ¿Para qué sirve?                               | Ejemplo en UserManager API                                                          |
+| ------ | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
+| GET    | Para pedir datos al servidor sin cambiar nada. | Cuando quieres ver usuarios o un usuario concreto (`/api/users` o `/api/users/:id`) |
+| POST   | Para enviar datos y crear algo nuevo.          | Cuando creas un usuario nuevo enviando nombre, email y contraseña (`/api/users`)    |
+| PATCH  | Para cambiar solo una parte de un usuario.     | Por ejemplo cambiar el rol o si está activo (`/api/users/:id/role`)                 |
+| DELETE | Para borrar algo del sistema.                  | Cuando eliminas un usuario usando su id (`/api/users/:id`)                          |

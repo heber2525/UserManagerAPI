@@ -60,6 +60,34 @@ app.delete('/api/users/:id', (req, res) => {
     id: id,
   });
 });
+app.get('/api/users/me', (req, res) => {
+  res.json({
+    id: 1,
+    name: 'Usuario de prueba',
+    email: 'usuario@email.com',
+    role: 'USER',
+    isActive: true,
+  });
+});
+app.patch('/api/users/:id/status', (req, res) => {
+  const { id } = req.params;
+  const { isActive } = req.body;
+  res.json({
+    message: 'Estado de usuario recibido para actualizar',
+    id: id,
+    isActive: isActive,
+  });
+});
+app.patch('/api/users/:id/role', (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+  res.json({
+    message: 'Rol de usuario recibido para actualizar',
+    id: id,
+    role: role,
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
