@@ -22,7 +22,7 @@ app.get('/api/health', (req, res) => {
     environment: 'development',
   });
 });
-app.get('api/users', (req, res) => {
+app.get('/api/users', (req, res) => {
   res.status(200).json({
     message: 'Listado de usuarios',
     data: [],
@@ -78,6 +78,7 @@ app.patch('/api/users/:id/status', (req, res) => {
     isActive: isActive,
   });
 });
+
 app.patch('/api/users/:id/role', (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
@@ -85,6 +86,49 @@ app.patch('/api/users/:id/role', (req, res) => {
     message: 'Rol de usuario recibido para actualizar',
     id: id,
     role: role,
+  });
+});
+
+app.post('/api/debug/body', (req, res) => {
+  res.status(200).json({
+    message: 'Body recibido correctamante',
+    body: req.body,
+  });
+});
+
+app.get('/api/debug/params/:id', (req, res) => {
+  res.status(200).json({
+    message: 'Params recibidos correctamente',
+    params: req.params,
+  });
+});
+
+app.get('/api/debug/query', (req, res) => {
+  res.status(200).json({
+    message: 'Query params recibidos correctamente',
+    query: req.query,
+  });
+});
+
+app.get('/api/debug/headers', (req, res) => {
+  res.status(200).json({
+    message: 'Headers recibidos correctamente',
+    headers: req.headers,
+  });
+});
+
+app.patch('/api/debug/users/:id', (req, res) => {
+  const { id } = req.params;
+  const { notify } = req.query;
+  const authorization = req.headers.authorization;
+  const changes = req.body;
+
+  res.status(200).json({
+    message: 'Datos combinados recibidos',
+    id,
+    notify,
+    authorization,
+    changes,
   });
 });
 
