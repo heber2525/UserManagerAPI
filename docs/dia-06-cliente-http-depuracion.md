@@ -39,3 +39,20 @@ códigos de estado de una forma más completa que el navegador.
 | POST /api/debug/request?source=thunder | Request completa  | 200             |                 |               |
 | GET /api/ruta-inventada                | Ruta inexistente  | 404             |                 |               |
 | POST /api/health                       | Método incorrecto | 404             |                 |               |
+
+## Mi guía para depurar una petición
+
+1. Comprobar que el servidor está arrancado.
+2. Revisar el método HTTP.
+3. Revisar la URL.
+4. Revisar el body.
+5. Revisar los headers.
+6. Mirar el status code.
+7. Mirar la terminal.
+
+| Herramienta              | Ventajas                                 | Limitaciones                                               |
+| ------------------------ | ---------------------------------------- | ---------------------------------------------------------- | --- | -------- |
+|                          |                                          |                                                            |
+| Navegador                | Útil para pruebas rapidas, fácil de usar | Solo permite GET directamente, no controla bien ni headers | h   | ni body. |
+|                          |                                          |                                                            |
+| Thunder Client / Postman | Permite probar APIs completas            | Requiere instalación y algo de aprendizaje inicial         |
