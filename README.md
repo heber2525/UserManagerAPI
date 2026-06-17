@@ -82,8 +82,11 @@ Más adelante estas rutas podrán eliminarse, ya que no forman parte de la API f
 
 ## Documentación del reto
 
+## Documentación del reto
+
 - [Día 1 - Diseño inicial](docs/dia-01-diseno-inicial.md)
 - [Día 2 - Preparación del proyecto](docs/dia-02-preparacion-proyecto.md)
 - [Día 3 - Primer endpoint](docs/dia-03-primer-endpoint.md)
 - [Día 4 - Métodos HTTP](docs/dia-04-metodos-http.md)
 - [Día 5 - JSON, body, params y headers](docs/dia-05-json-body-params-headers.md)
+- [Día 6 - Cliente HTTP y depuración](docs/dia-06-cliente-http-depuracion.md)

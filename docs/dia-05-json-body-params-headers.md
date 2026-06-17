@@ -26,3 +26,11 @@ El body sirve para enviar datos principales al servidor.
 Los params sirven para identificar recursos concretos en la ruta.
 Los query params sirven para enviar filtros u opciones en la URL.
 Los headers sirven para enviar información adicional de la petición.
+
+| Petición                                      | Dato probado | Código esperado | Resultado obtenido |
+| --------------------------------------------- | ------------ | --------------- | ------------------ |
+| POST /api/debug/body                          | Body         | 200             |                    |
+| GET /api/debug/params/25                      | Params       | 200             |                    |
+| GET /api/debug/query?role=ADMIN&isActive=true | Query params | 200             |                    |
+| GET /api/debug/headers                        | Headers      | 200             |                    |
+| PATCH /api/debug/users/7?notify=true          | Combinado    | 200             |                    |

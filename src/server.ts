@@ -38,6 +38,7 @@ app.get('/api/users/:id', (req, res) => {
 app.post('/api/users', (req, res) => {
   const userData = req.body;
 
+  console.log('Body recibido en POST /api/users:', userData);
   res.status(201).json({
     message: 'Usuario recibido para crear',
     data: userData,
@@ -129,6 +130,18 @@ app.patch('/api/debug/users/:id', (req, res) => {
     notify,
     authorization,
     changes,
+  });
+});
+
+app.post('/api/debug/request', (req, res) => {
+  res.status(200).json({
+    message: 'Información completa de la petición',
+    method: req.method,
+    path: req.path,
+    params: req.params,
+    query: req.query,
+    headers: req.headers,
+    body: req.body,
   });
 });
 
