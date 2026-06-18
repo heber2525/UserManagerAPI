@@ -43,6 +43,24 @@ const users: User[] = [
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: 4,
+    name: 'Pablo Perez',
+    email: 'pablo@email.com',
+    role: 'USER',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 6,
+    name: 'Marta Montero',
+    email: 'marta@email.com',
+    role: 'USER',
+    isActive: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 app.use(express.json());
@@ -71,6 +89,12 @@ app.get('/api/users', (req, res) => {
     data: users,
   });
 });
+app.get('/api/users/count', (req, res) => {
+  res.status(200).json({
+    message: 'Esta es la cantidad de usarios',
+    total: users.length,
+  });
+});
 app.get('/api/users/:id', (req, res) => {
   const { id } = req.params;
   res.status(200).json({
@@ -78,6 +102,7 @@ app.get('/api/users/:id', (req, res) => {
     id: id,
   });
 });
+
 app.post('/api/users', (req, res) => {
   const userData = req.body;
 
@@ -87,6 +112,7 @@ app.post('/api/users', (req, res) => {
     data: userData,
   });
 });
+
 app.patch('/api/users/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -97,6 +123,7 @@ app.patch('/api/users/:id', (req, res) => {
     changes: changes,
   });
 });
+
 app.delete('/api/users/:id', (req, res) => {
   const { id } = req.params;
   res.status(200).json({
