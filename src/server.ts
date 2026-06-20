@@ -95,14 +95,39 @@ app.get('/api/users/count', (req, res) => {
     total: users.length,
   });
 });
-app.get('/api/users/:id', (req, res) => {
-  const { id } = req.params;
+
+app.get('/api/users/active', (req, res) => {
+  const activeUsers = users.filter((user) => user.isActive);
   res.status(200).json({
-    message: 'Detalle de usuario',
-    id: id,
+    isActive: activeUsers,
   });
 });
 
+app.get('/api/users/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const idParam = req.params.id;
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      error: 'El ID debe ser un número',
+      received: idParam,
+    });
+  }
+
+  const user = users.find((user) => user.id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      error: 'Usuario no encontrado',
+      id: id,
+    });
+  }
+
+  return res.status(200).json({
+    message: 'Usuario encontrado',
+    data: user,
+  });
+});
 app.post('/api/users', (req, res) => {
   const userData = req.body;
 

@@ -48,3 +48,17 @@ al estado inicial.
 | La respuesta contiene data          |           |
 | data es un array                    |           |
 | Los usuarios no incluyen contraseña |           |
+
+## Memoria vs base de datos
+
+### ¿Qué significa guardar datos en memoria?
+
+Que los datos se guardan temporalmente mientras la aplicación está funcionando.
+
+### ¿Qué problema tiene?
+
+Si se reinicia o se apaga el servidor, los datos se pierden.
+
+### ¿Por qué necesitaremos una base de datos?
+
+Porque permite guardar los datos de forma permanente y no se borran al reiniciar la aplicación.
