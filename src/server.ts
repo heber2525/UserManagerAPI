@@ -128,13 +128,48 @@ app.get('/api/users/:id', (req, res) => {
     data: user,
   });
 });
-app.post('/api/users', (req, res) => {
-  const userData = req.body;
 
-  console.log('Body recibido en POST /api/users:', userData);
-  res.status(201).json({
-    message: 'Usuario recibido para crear',
-    data: userData,
+app.post('/api/users', (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({
+      error: 'name, email y password son obligatorios',
+    });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({
+      error: 'La contraseña debe tener al menos 6 caracteres',
+    });
+  }
+
+  const existingUser = users.find((user) => user.email === email);
+
+  if (existingUser) {
+    return res.status(409).json({
+      error: 'El email ya está registrado',
+    });
+  }
+
+  const newId =
+    users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
+
+  const newUser: User = {
+    id: newId,
+    name,
+    email,
+    role: 'USER',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  users.push(newUser);
+
+  return res.status(201).json({
+    message: 'Usuario creado correctamente',
+    data: newUser,
   });
 });
 
