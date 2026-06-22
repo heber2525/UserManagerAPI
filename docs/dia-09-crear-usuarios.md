@@ -42,3 +42,7 @@ POST /api/users
 Para crear un usuario se leen los datos desde `req.body`, se validan, se
 comprueba que el email no esté repetido, se genera un nuevo id y se añade el
 usuario al array con `push`.
+
+## Datos sensibles
+
+La contraseña es un dato delicado que no puede ser mostrado el body. Supone un riesgo de seguridad.

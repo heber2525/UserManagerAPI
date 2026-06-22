@@ -131,8 +131,12 @@ app.get('/api/users/:id', (req, res) => {
 
 app.post('/api/users', (req, res) => {
   const { name, email, password } = req.body;
+  const cleanName = name.trim();
+  const normalizedEmail = email.toLowerCase();
+  const existingUser = users.find((user) => user.email === normalizedEmail);
+  const cleanEmail = email.trim().toLowerCase();
 
-  if (!name || !email || !password) {
+  if (!cleanName || !cleanEmail || !password) {
     return res.status(400).json({
       error: 'name, email y password son obligatorios',
     });
@@ -144,7 +148,11 @@ app.post('/api/users', (req, res) => {
     });
   }
 
-  const existingUser = users.find((user) => user.email === email);
+  if (!cleanEmail.includes('@')) {
+    return res.status(400).json({
+      error: 'El email no tiene un formato válido',
+    });
+  }
 
   if (existingUser) {
     return res.status(409).json({
@@ -157,8 +165,8 @@ app.post('/api/users', (req, res) => {
 
   const newUser: User = {
     id: newId,
-    name,
-    email,
+    name: cleanName,
+    email: cleanEmail,
     role: 'USER',
     isActive: true,
     createdAt: new Date().toISOString(),
