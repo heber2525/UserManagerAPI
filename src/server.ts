@@ -181,14 +181,140 @@ app.post('/api/users', (req, res) => {
   });
 });
 
-app.patch('/api/users/:id', (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
+app.patch('/api/users/:id/status', (req, res) => {
+  const idParam = req.params.id;
+  const id = Number(idParam);
+  const { isActive } = req.body || {};
 
-  res.status(200).json({
-    message: 'Usuario recibido para actualizar',
-    id: id,
-    changes: changes,
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      error: 'El ID debe ser un número',
+      received: idParam,
+    });
+  }
+
+  const userIndex = users.findIndex((user) => user.id === id);
+
+  if (userIndex === -1) {
+    return res.status(404).json({
+      error: 'Usuario no encontrado',
+      id,
+    });
+  }
+
+  if (isActive !== undefined && typeof isActive !== 'boolean') {
+    return res.status(400).json({
+      error: 'isActive debe ser true o false',
+    });
+  }
+  console.log('BODY:', req.body);
+  console.log('isActive:', isActive, typeof isActive);
+
+  users[userIndex].isActive = isActive;
+
+  return res.status(200).json({
+    message: 'Estado actualizado correctamente',
+    data: users[userIndex],
+  });
+});
+
+app.patch('/api/users/:id', (req, res) => {
+  const idParam = req.params.id;
+  const id = Number(idParam);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      error: 'El ID debe ser un número',
+      received: idParam,
+    });
+  }
+
+  const userIndex = users.findIndex((user) => user.id === id);
+
+  if (userIndex === -1) {
+    return res.status(404).json({
+      error: 'Usuario no encontrado',
+      id,
+    });
+  }
+
+  const { id: idBody, name, email, isActive, role } = req.body;
+
+  if (role !== undefined) {
+    return res.status(400).json({
+      error: 'No se puede modificar el Rol',
+    });
+  }
+  if (idBody !== undefined) {
+    return res.status(400).json({
+      error: 'No se puede modificar el id',
+    });
+  }
+
+  const hasChanges =
+    name !== undefined || email !== undefined || isActive !== undefined;
+
+  if (!hasChanges) {
+    return res.status(400).json({
+      error: 'Debes enviar al menos un campo para actualizar',
+    });
+  }
+
+  let cleanName: string | undefined;
+
+  if (name !== undefined) {
+    cleanName = String(name).trim();
+
+    if (cleanName.length === 0) {
+      return res.status(400).json({
+        error: 'El nombre no puede estar vacío',
+      });
+    }
+  }
+
+  let cleanEmail: string | undefined;
+
+  if (email !== undefined) {
+    cleanEmail = String(email).trim().toLowerCase();
+
+    if (!cleanEmail.includes('@')) {
+      return res.status(400).json({
+        error: 'El email no tiene un formato válido',
+      });
+    }
+
+    const emailAlreadyExists = users.some(
+      (user) => user.email === cleanEmail && user.id !== id
+    );
+
+    if (emailAlreadyExists) {
+      return res.status(409).json({
+        error: 'El email ya está registrado',
+      });
+    }
+  }
+
+  if (isActive !== undefined && typeof isActive !== 'boolean') {
+    return res.status(400).json({
+      error: 'isActive debe ser true o false',
+    });
+  }
+
+  const currentUser = users[userIndex];
+
+  const updatedUser: User = {
+    ...currentUser,
+    name: cleanName ?? currentUser.name,
+    email: cleanEmail ?? currentUser.email,
+    isActive: isActive ?? currentUser.isActive,
+    updatedAt: new Date().toISOString(),
+  };
+
+  users[userIndex] = updatedUser;
+
+  return res.status(200).json({
+    message: 'Usuario actualizado correctamente',
+    data: updatedUser,
   });
 });
 
@@ -208,15 +334,15 @@ app.get('/api/users/me', (req, res) => {
     isActive: true,
   });
 });
-app.patch('/api/users/:id/status', (req, res) => {
-  const { id } = req.params;
-  const { isActive } = req.body;
-  res.json({
-    message: 'Estado de usuario recibido para actualizar',
-    id: id,
-    isActive: isActive,
-  });
-});
+// app.patch('/api/users/:id/status', (req, res) => {
+//   const { id } = req.params;
+//   const { isActive } = req.body;
+//   res.json({
+//     message: 'Estado de usuario recibido para actualizar',
+//     id: id,
+//     isActive: isActive,
+//   });
+// });
 
 app.patch('/api/users/:id/role', (req, res) => {
   const { id } = req.params;

@@ -198,3 +198,4 @@ Posibles errores:
 - [Día 7 - Listado de usuarios en memoria](docs/dia-07-listado-usuarios.md)
 - [Día 8 - Consultar usuario por ID](docs/dia-08-consultar-usuario-id.md)
 - [Día 9 - Crear usuarios en memoria](docs/dia-09-crear-usuarios.md)
+- [Día 10 - Actualizar usuarios en memoria](docs/dia-10-actualizar-usuarios.md)
